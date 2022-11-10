@@ -7,20 +7,20 @@ import {
   SimilarArtists,
   chartTracks
 } from '../controllers/musicController';
-import { TokenValidation } from '../middlewares/verifyToken';
+// import { TokenValidation } from '../middlewares/verifyToken';
 
 const router = express.Router();
 
-router.get('/search', TokenValidation, SearchTitle);
+router.get('/search', SearchTitle);
 
-router.get('/title/:idTitle', TokenValidation, SearchTitleById);
+router.get('/title/:idTitle', SearchTitleById);
 
-router.get('/album/:idAlbum', TokenValidation, SearchByAlbum);
+router.get('/album/:idAlbum', SearchByAlbum);
 
-router.get('/artist/:idArtist/:page', TokenValidation, SearchByArtist);
+router.get('/artist/:idArtist/:page', SearchByArtist);
 
-router.get('/related/:idArtist', TokenValidation, SimilarArtists);
+router.get('/related/:idArtist', SimilarArtists);
 
-router.get('/chart', TokenValidation, chartTracks);
+router.get('/chart', chartTracks);
 
 export default router;
