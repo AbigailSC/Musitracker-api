@@ -18,7 +18,8 @@ export const singUp: RequestHandler = async (req, res) => {
       { _id: savedUser._id },
       process.env.TOKEN_SECRET ?? 'tokenSecret'
     );
-    res.header('authToken', token).json(savedUser);
+    console.log(savedUser);
+    res.header('authToken', token).json({ token });
   } catch (error) {
     console.log(error);
   }
