@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import {
-  // getUsers,
+  getUsers,
   // getUserById,
   // updateUser,
   // removeUser,
@@ -12,7 +12,7 @@ import { TokenValidation } from '../middlewares/verifyToken';
 
 const router = Router();
 
-// router.get("/", getUsers);
+router.get('/', getUsers);
 // router.get("/:id", getUserById);
 // router.put("/:id", updateUser);
 // router.delete("/:id", removeUser);
