@@ -26,7 +26,7 @@ interface ITitleArtist {
   id: number;
   name: string;
   link: string;
-  picture_big: string;
+  picture_xl: string;
 }
 
 interface ITitleContributor {
@@ -104,7 +104,7 @@ export const SearchTitle: RequestHandler = async (req, res) => {
           id: elemento.artist.id,
           name: elemento.artist.name,
           link: elemento.artist.link,
-          picture: elemento.artist.picture_big
+          picture: elemento.artist.picture_xl
         },
         album: {
           id: elemento.album.id,
@@ -139,7 +139,7 @@ export const SearchTitleById: RequestHandler = async (req, res) => {
         id: apiData.id,
         name: apiData.artist.name,
         link: apiData.artist.link,
-        picture_big: apiData.artist.picture_big
+        picture_xl: apiData.artist.picture_xl
       },
       album: {
         id: apiData.album.id,
@@ -197,7 +197,7 @@ export const SearchByAlbum: RequestHandler = async (req, res) => {
         id: apiData.id,
         name: apiData.artist.name,
         link: apiData.artist.link,
-        picture_big: apiData.artist.picture_big
+        picture_xl: apiData.artist.picture_xl
       },
       tracks: apiData.tracks.data.map((elem: IAlbumTracks) => {
         return {
@@ -304,7 +304,7 @@ export const chartTracks: RequestHandler = async (_req, res) => {
           id: elemento.artist.id,
           name: elemento.artist.name,
           link: elemento.artist.link,
-          picture: elemento.artist.picture_big
+          picture: elemento.artist.picture_xl
         },
         album: {
           id: elemento.album.id,
