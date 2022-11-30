@@ -5,7 +5,11 @@ import {
   SearchByAlbum,
   SearchByArtist,
   SimilarArtists,
-  chartTracks
+  chartTracks,
+  topPlaylists,
+  getGenres,
+  searchByGenre,
+  getPodcast
 } from '../controllers/musicController';
 // import { TokenValidation } from '../middlewares/verifyToken';
 
@@ -22,5 +26,13 @@ router.get('/artist/:idArtist/:page', SearchByArtist);
 router.get('/related/:idArtist', SimilarArtists);
 
 router.get('/chart', chartTracks);
+
+router.get('/topPlaylist', topPlaylists);
+
+router.get('/genres', getGenres);
+
+router.get('/genres/:genre', searchByGenre);
+
+router.get('/podcasts', getPodcast);
 
 export default router;

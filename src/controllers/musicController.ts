@@ -87,6 +87,43 @@ interface IArtist {
   nb_fan: number;
 }
 
+interface IPlaylist {
+  id: number;
+  title: string;
+  nb_tracks: number;
+  picture_xl: string;
+  tracklist: string;
+  creation_date: string;
+  user: IPlaylistCreator;
+}
+
+interface IPlaylistCreator {
+  id: number;
+  name: string;
+}
+
+interface IGenre {
+  id: number;
+  name: string;
+  picture_xl: string;
+}
+
+interface IGenreTracks {
+  id: number;
+  name: string;
+  picture_xl: string;
+  tracklist: string;
+}
+
+interface IPodcast {
+  id: number;
+  title: string;
+  description: string;
+  fans: number;
+  link: string;
+  picture_xl: string;
+}
+
 export const SearchTitle: RequestHandler = async (req, res) => {
   const { title } = req.query;
   try {
@@ -315,6 +352,83 @@ export const chartTracks: RequestHandler = async (_req, res) => {
       };
     });
     res.json(cataChart);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const topPlaylists: RequestHandler = async (_req, res) => {
+  try {
+    const apiData = await axios.get('https://api.deezer.com/chart/0/playlists');
+    const topPlaylists = apiData.data.data.map((element: IPlaylist) => {
+      return {
+        id: element.id,
+        title: element.title,
+        nb_tracks: element.nb_tracks,
+        picture_xl: element.picture_xl,
+        tracklist: element.tracklist,
+        creation_date: element.creation_date,
+        user: {
+          id: element.user.id,
+          name: element.user.name
+        }
+      };
+    });
+    res.json(topPlaylists);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getGenres: RequestHandler = async (_req, res) => {
+  try {
+    const apiData = await axios.get('https://api.deezer.com/genre');
+    const genres = apiData.data.data.map((genre: IGenre) => {
+      return {
+        id: genre.id,
+        name: genre.name,
+        picture: genre.picture_xl
+      };
+    });
+    res.json(genres);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const searchByGenre: RequestHandler = async (req, res) => {
+  const { genre } = req.params;
+  try {
+    const apiData = await axios.get(
+      `https://api.deezer.com/genre/${genre}/artists`
+    );
+    const artists = apiData.data.data.map((artist: IGenreTracks) => {
+      return {
+        id: artist.id,
+        name: artist.name,
+        link: artist.tracklist,
+        picture: artist.picture_xl
+      };
+    });
+    res.json(artists);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getPodcast: RequestHandler = async (_req, res) => {
+  try {
+    const apiData = await axios.get('https://api.deezer.com/chart/0/podcasts');
+    const podcasts = apiData.data.data.map((podcast: IPodcast) => {
+      return {
+        id: podcast.id,
+        title: podcast.title,
+        description: podcast.description,
+        link: podcast.link,
+        picture: podcast.picture_xl
+      };
+    });
+    res.json(podcasts);
   } catch (error) {
     console.log(error);
   }
