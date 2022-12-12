@@ -20,14 +20,6 @@ const PORT = process.env.PORT || 3000;
 
 const mongo = process.env.MONGODB_URI;
 
-// const dbConfig = {
-//   host: process.env.DB_HOST || "localhost",
-//   port: process.env.DB_PORT || "3000",
-//   user: process.env.DB_USER || "root",
-//   password: process.env.DB_PASSWORD || "berserk",
-//   database: process.env.DB_NAME || "musitracker",
-// };
-
 // MongoDB connection
 mongoose
   .connect(mongo as string)
