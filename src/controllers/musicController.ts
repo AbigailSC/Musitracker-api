@@ -82,7 +82,7 @@ interface IArtist {
   id: number;
   name: string;
   link: string;
-  picture_big: string;
+  picture_xl: string;
   nb_album: number;
   nb_fan: number;
 }
@@ -304,6 +304,20 @@ export const SearchByArtist: RequestHandler = async (req, res) => {
   }
 };
 
+export const GetArtistInfo: RequestHandler = async (req, res) => {
+  const { idArtist } = req.params;
+  const apiData = await axios.get(`https://api.deezer.com/artist/${idArtist}`);
+  const artistInfo = {
+    id: apiData.data.id,
+    name: apiData.data.name,
+    link: apiData.data.link,
+    picture_xl: apiData.data.picture_xl,
+    nb_album: apiData.data.nb_album,
+    nb_fan: apiData.data.nb_fan
+  };
+  res.json(artistInfo);
+};
+
 export const SimilarArtists: RequestHandler = async (req, res) => {
   const { idArtist } = req.params;
   try {
@@ -315,7 +329,7 @@ export const SimilarArtists: RequestHandler = async (req, res) => {
         id: artist.id,
         name: artist.name,
         link: artist.link,
-        picture_big: artist.picture_big,
+        picture_xl: artist.picture_xl,
         nb_album: artist.nb_album,
         nb_fan: artist.nb_fan
       };
