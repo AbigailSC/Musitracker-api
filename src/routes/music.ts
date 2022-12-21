@@ -24,7 +24,7 @@ router.get('/album/:idAlbum', SearchByAlbum);
 
 router.get('/artist/:idArtist', GetArtistInfo);
 
-router.get('/artist/:idArtist/albums?=:page', SearchByArtist);
+router.get('/artist/:idArtist/albums/:page', SearchByArtist);
 
 router.get('/related/:idArtist', SimilarArtists);
 
