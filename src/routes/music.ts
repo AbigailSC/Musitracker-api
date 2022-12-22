@@ -10,7 +10,8 @@ import {
   getGenres,
   searchByGenre,
   getPodcast,
-  GetArtistInfo
+  GetArtistInfo,
+  getTopTracksByArtist
 } from '../controllers/musicController';
 // import { TokenValidation } from '../middlewares/verifyToken';
 
@@ -23,6 +24,8 @@ router.get('/title/:idTitle', SearchTitleById);
 router.get('/album/:idAlbum', SearchByAlbum);
 
 router.get('/artist/:idArtist', GetArtistInfo);
+
+router.get('/artist/:idArtist/topTracks', getTopTracksByArtist);
 
 router.get('/artist/:idArtist/albums/:page', SearchByArtist);
 

@@ -124,6 +124,14 @@ interface IPodcast {
   picture_xl: string;
 }
 
+interface ITopTrack {
+  id: number;
+  title: string;
+  duration: number;
+  rank: number;
+  preview: string;
+}
+
 export const SearchTitle: RequestHandler = async (req, res) => {
   const { title } = req.query;
   try {
@@ -443,6 +451,27 @@ export const getPodcast: RequestHandler = async (_req, res) => {
       };
     });
     res.json(podcasts);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getTopTracksByArtist: RequestHandler = async (req, res) => {
+  const { idArtist } = req.params;
+  try {
+    const apiData = await axios.get(
+      `https://api.deezer.com/artist/${idArtist}/top`
+    );
+    const topTracks = apiData.data.data.map((track: ITopTrack) => {
+      return {
+        id: track.id,
+        title: track.title,
+        preview: track.preview,
+        duration: track.duration,
+        rank: track.rank
+      };
+    });
+    res.json(topTracks);
   } catch (error) {
     console.log(error);
   }
