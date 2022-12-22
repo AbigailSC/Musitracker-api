@@ -474,9 +474,13 @@ export const getTopTracksByArtist: RequestHandler = async (req, res) => {
         title: track.title,
         preview: track.preview,
         duration: track.duration,
-        artist: track.artist.name,
-        album: track.album.title,
-        cover: track.album.cover_xl
+        artist: {
+          name: track.artist.name
+        },
+        album: {
+          title: track.album.title,
+          cover: track.album.cover_xl
+        }
       };
     });
     res.json(topTracks);
