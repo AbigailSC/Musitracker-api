@@ -128,7 +128,12 @@ interface ITopTrack {
   id: number;
   title: string;
   duration: number;
-  rank: number;
+  artist: {
+    name: string;
+  };
+  album: {
+    title: string;
+  };
   preview: string;
 }
 
@@ -468,7 +473,8 @@ export const getTopTracksByArtist: RequestHandler = async (req, res) => {
         title: track.title,
         preview: track.preview,
         duration: track.duration,
-        rank: track.rank
+        artist: track.artist.name,
+        album: track.album.title
       };
     });
     res.json(topTracks);
