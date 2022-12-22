@@ -133,6 +133,7 @@ interface ITopTrack {
   };
   album: {
     title: string;
+    cover_xl: string;
   };
   preview: string;
 }
@@ -474,7 +475,8 @@ export const getTopTracksByArtist: RequestHandler = async (req, res) => {
         preview: track.preview,
         duration: track.duration,
         artist: track.artist.name,
-        album: track.album.title
+        album: track.album.title,
+        cover: track.album.cover_xl
       };
     });
     res.json(topTracks);
