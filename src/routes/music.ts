@@ -11,7 +11,9 @@ import {
   searchByGenre,
   getPodcast,
   GetArtistInfo,
-  getTopTracksByArtist
+  getTopTracksByArtist,
+  trendingArtists,
+  playlistById
 } from '../controllers/musicController';
 // import { TokenValidation } from '../middlewares/verifyToken';
 
@@ -31,9 +33,13 @@ router.get('/artist/:idArtist/albums/:page', SearchByArtist);
 
 router.get('/related/:idArtist', SimilarArtists);
 
-router.get('/chart', chartTracks);
+router.get('/trending', chartTracks);
+
+router.get('/trending/artists', trendingArtists);
 
 router.get('/topPlaylist', topPlaylists);
+
+router.get('/playlist/:playlistId', playlistById);
 
 router.get('/genres', getGenres);
 

@@ -47,6 +47,7 @@ interface IAlbum {
   tracks_number: string;
   duration_total: number;
   release_date: string;
+  record_type: string;
   tracklist: string;
   contributors: ITitleContributor;
   artist: ITitleArtist;
@@ -83,8 +84,8 @@ interface IArtist {
   name: string;
   link: string;
   picture_xl: string;
-  nb_album: number;
-  nb_fan: number;
+  nb_album?: number;
+  nb_fan?: number;
 }
 
 interface IPlaylist {
@@ -128,6 +129,7 @@ interface ITopTrack {
   id: number;
   title: string;
   duration: number;
+  rank: number;
   artist: {
     name: string;
   };
@@ -231,6 +233,7 @@ export const SearchByAlbum: RequestHandler = async (req, res) => {
         };
       }),
       label: apiData.label,
+      record_type: apiData.record_type,
       tracks_number: apiData.tracks_number,
       release_date: apiData.release_date,
       tracklist: apiData.tracklist,
@@ -357,7 +360,7 @@ export const SimilarArtists: RequestHandler = async (req, res) => {
 export const chartTracks: RequestHandler = async (_req, res) => {
   try {
     const apiData = await axios.get('https://api.deezer.com/chart/0/tracks');
-    const cataChart = apiData.data.data.map((elemento: ITitle) => {
+    const trendingMusic = apiData.data.data.map((elemento: ITitle) => {
       return {
         id: elemento.id,
         title: elemento.title,
@@ -379,7 +382,9 @@ export const chartTracks: RequestHandler = async (_req, res) => {
         }
       };
     });
-    res.json(cataChart);
+    // sort trendingMusic by rank
+    trendingMusic.sort((a: ITitle, b: ITitle) => (a.rank > b.rank ? -1 : 1));
+    res.json(trendingMusic);
   } catch (error) {
     console.log(error);
   }
@@ -403,6 +408,40 @@ export const topPlaylists: RequestHandler = async (_req, res) => {
       };
     });
     res.json(topPlaylists);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const playlistById: RequestHandler = async (req, res) => {
+  const { playlistId } = req.params;
+  try {
+    const apiData = await axios.get(
+      `https://api.deezer.com/playlist/${playlistId}/tracks`
+    );
+    const playlist = apiData.data.data.map((playlist: ITitle) => {
+      return {
+        id: playlist.id,
+        title: playlist.title,
+        link: playlist.link,
+        duration: playlist.duration,
+        rank: playlist.rank,
+        preview: playlist.preview,
+        artist: {
+          id: playlist.artist.id,
+          name: playlist.artist.name,
+          link: playlist.artist.link,
+          picture: playlist.artist.picture_xl
+        },
+        album: {
+          id: playlist.album.id,
+          title: playlist.album.title,
+          cover: playlist.album.cover_big,
+          type: playlist.album.type
+        }
+      };
+    });
+    res.json(playlist);
   } catch (error) {
     console.log(error);
   }
@@ -474,6 +513,7 @@ export const getTopTracksByArtist: RequestHandler = async (req, res) => {
         title: track.title,
         preview: track.preview,
         duration: track.duration,
+        rank: track.rank,
         artist: {
           name: track.artist.name
         },
@@ -483,7 +523,25 @@ export const getTopTracksByArtist: RequestHandler = async (req, res) => {
         }
       };
     });
+    topTracks.sort((a: ITopTrack, b: ITopTrack) => (a.rank > b.rank ? -1 : 1));
     res.json(topTracks);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const trendingArtists: RequestHandler = async (_req, res) => {
+  try {
+    const apiData = await axios.get('https://api.deezer.com/chart/0/artists');
+    const trendingArtists = apiData.data.data.map((artist: IArtist) => {
+      return {
+        id: artist.id,
+        name: artist.name,
+        link: artist.link,
+        picture_xl: artist.picture_xl
+      };
+    });
+    res.json(trendingArtists);
   } catch (error) {
     console.log(error);
   }
