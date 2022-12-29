@@ -253,13 +253,25 @@ export const SearchByAlbum: RequestHandler = async (req, res) => {
         link: apiData.artist.link,
         picture_xl: apiData.artist.picture_xl
       },
-      tracks: apiData.tracks.data.map((elem: IAlbumTracks) => {
+      tracks: apiData.tracks.data.map((elem: ITitle) => {
         return {
           id: elem.id,
           title: elem.title,
           link: elem.link,
           duration: elem.duration,
-          preview: elem.preview
+          preview: elem.preview,
+          artist: {
+            id: elem.artist.id,
+            name: elem.artist.name,
+            link: elem.artist.link,
+            picture_xl: elem.artist.picture_xl
+          },
+          album: {
+            id: elem.album.id,
+            title: elem.album.title,
+            cover_big: elem.album.cover_big,
+            type: elem.album.type
+          }
         };
       })
     };
