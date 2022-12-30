@@ -22,6 +22,23 @@ interface ITitle {
   contributors?: ITitleContributor;
 }
 
+interface IPlaylist {
+  id: number;
+  title: string;
+  description: string;
+  duration: number;
+  nb_tracks: number;
+  fans: number;
+  link: string;
+  picture_xl: string;
+  creation_date: string;
+  creator: {
+    id: number;
+    name: string;
+  };
+  tracks: ITitle[];
+}
+
 interface ITitleArtist {
   id: number;
   name: string;
@@ -429,30 +446,44 @@ export const playlistById: RequestHandler = async (req, res) => {
   const { playlistId } = req.params;
   try {
     const apiData = await axios.get(
-      `https://api.deezer.com/playlist/${playlistId}/tracks`
+      `https://api.deezer.com/playlist/${playlistId}`
     );
-    const playlist = apiData.data.data.map((playlist: ITitle) => {
-      return {
-        id: playlist.id,
-        title: playlist.title,
-        link: playlist.link,
-        duration: playlist.duration,
-        rank: playlist.rank,
-        preview: playlist.preview,
-        artist: {
-          id: playlist.artist.id,
-          name: playlist.artist.name,
-          link: playlist.artist.link,
-          picture: playlist.artist.picture_xl
-        },
-        album: {
-          id: playlist.album.id,
-          title: playlist.album.title,
-          cover: playlist.album.cover_big,
-          type: playlist.album.type
-        }
-      };
-    });
+    const playlist = {
+      id: apiData.data.id,
+      title: apiData.data.title,
+      description: apiData.data.description,
+      duration: apiData.data.duration,
+      nb_tracks: apiData.data.nb_tracks,
+      fans: apiData.data.fans,
+      link: apiData.data.link,
+      picture_xl: apiData.data.picture_xl,
+      creation_date: apiData.data.creation_date,
+      creator: {
+        id: apiData.data.creator.id,
+        name: apiData.data.creator.name
+      },
+      tracks: apiData.data.tracks.data.map((elemento: ITitle) => {
+        return {
+          id: elemento.id,
+          title: elemento.title,
+          link: elemento.link,
+          duration: elemento.duration,
+          rank: elemento.rank,
+          preview: elemento.preview,
+          artist: {
+            id: elemento.artist.id,
+            name: elemento.artist.name,
+            link: elemento.artist.link
+          },
+          album: {
+            id: elemento.album.id,
+            title: elemento.album.title,
+            cover: elemento.album.cover_big,
+            type: elemento.album.type
+          }
+        };
+      })
+    };
     res.json(playlist);
   } catch (error) {
     console.log(error);
