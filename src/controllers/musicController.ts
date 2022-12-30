@@ -458,6 +458,7 @@ export const playlistById: RequestHandler = async (req, res) => {
       link: apiData.data.link,
       picture_xl: apiData.data.picture_xl,
       creation_date: apiData.data.creation_date,
+      public: apiData.data.public,
       creator: {
         id: apiData.data.creator.id,
         name: apiData.data.creator.name
