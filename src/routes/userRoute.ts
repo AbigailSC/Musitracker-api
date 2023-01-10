@@ -17,7 +17,7 @@ router.get('/', getUsers);
 // router.put("/:id", updateUser);
 // router.delete("/:id", removeUser);
 
-router.post('/favorites/:idUser', TokenValidation, addFavorite);
+router.post('/favorites', TokenValidation, addFavorite);
 
 router.put('/favorites/:idFavorite', TokenValidation, removeFavorite);
 

@@ -42,13 +42,14 @@ export const removeUser: RequestHandler = async (req, res) => {
 };
 
 export const addFavorite: RequestHandler = async (req, res) => {
-  const { idTitle } = req.body; // id del tema que va a agregar
-  const { idUser } = req.params; // usuario que actualizo
+  const { idTitle, idUser } = req.body;
+  // id del tema que va a agregar// usuario que actualizo
   try {
     const favoriteDuplicate = await UserSchema.find({
       'favorites.idTitle': idTitle
     });
     if (favoriteDuplicate.length > 0) {
+      console.log('Ya esta agregado!');
       res.status(400).json('The song already exists in your favorites!');
     } else {
       const newFavorite = await FavoriteSchema.create({
@@ -66,7 +67,6 @@ export const addFavorite: RequestHandler = async (req, res) => {
           }
         }
       });
-
       res.json(newFavorite);
     }
   } catch (error) {
@@ -75,12 +75,44 @@ export const addFavorite: RequestHandler = async (req, res) => {
 };
 
 export const removeFavorite: RequestHandler = async (req, res) => {
+  const { idUser } = req.body;
   const { idFavorite } = req.params;
   try {
-    const userFavorite = await FavoriteSchema.findByIdAndUpdate(idFavorite, {
-      active: false
+    const removeFavOnFavoritesSchema = await FavoriteSchema.findByIdAndUpdate(
+      idFavorite,
+      {
+        active: false
+      }
+    );
+
+    // const removeFavOnUserSchema = await UserSchema.findByIdAndUpdate(idUser, {
+    //   $pull: {
+    //     favorites: {
+    //       _id: idFavorite,
+    //       active: false
+    //     }
+    //   }
+    // });
+    // update active to false in userFavorites
+    // console.log(removeFavOnUserSchema);
+
+    interface IData {
+      _id: string;
+      idTitle: string;
+      date: Date;
+      active: boolean;
+    }
+
+    (await UserSchema.find(idUser)).forEach((element) => {
+      element.favorites.forEach((element: IData) => {
+        console.log(element);
+        if (element._id === idFavorite) {
+          element.active = false;
+        }
+      });
     });
-    res.send(userFavorite);
+
+    res.send(removeFavOnFavoritesSchema);
   } catch (error) {
     console.log(error);
   }
@@ -89,8 +121,8 @@ export const removeFavorite: RequestHandler = async (req, res) => {
 export const getFavorites: RequestHandler = async (req, res) => {
   const { idUser } = req.params;
   try {
-    const allFavorites = await UserSchema.findById(idUser);
-    res.json(allFavorites?.favorites);
+    const allFavorites = await FavoriteSchema.find({ idUser });
+    res.json(allFavorites);
   } catch (error) {
     console.log(error);
   }

@@ -202,9 +202,6 @@ export const SearchTitleById: RequestHandler = async (req, res) => {
       duration: apiData.duration,
       rank: apiData.rank,
       preview: apiData.preview,
-      track_position: apiData.track_position,
-      release_date: apiData.release_date,
-      type: apiData.type,
       artist: {
         id: apiData.id,
         name: apiData.artist.name,
@@ -286,7 +283,7 @@ export const SearchByAlbum: RequestHandler = async (req, res) => {
           album: {
             id: elem.album.id,
             title: elem.album.title,
-            cover_big: elem.album.cover_big,
+            cover: elem.album.cover_big,
             type: elem.album.type
           }
         };
