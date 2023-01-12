@@ -96,21 +96,19 @@ export const removeFavorite: RequestHandler = async (req, res) => {
     // update active to false in userFavorites
     // console.log(removeFavOnUserSchema);
 
-    interface IData {
-      _id: string;
-      idTitle: string;
-      date: Date;
-      active: boolean;
-    }
-
     (await UserSchema.find(idUser)).forEach((element) => {
       element.favorites.forEach((element: IData) => {
-        console.log(element);
         if (element._id === idFavorite) {
           element.active = false;
         }
       });
     });
+    interface IData {
+      _id: string;
+      idTitle: number;
+      date: Date;
+      active: boolean;
+    }
 
     res.send(removeFavOnFavoritesSchema);
   } catch (error) {
