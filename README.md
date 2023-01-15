@@ -14,7 +14,7 @@
 
 ## Documentation
 
-Full documentation for the Pelias API lives in [Swagger doc](https://musitracker-api-production.up.railway.app/docs/).
+Full documentation for the Musitracker API lives in [Swagger doc](https://musitracker-api-production.up.railway.app/docs/).
 
 ## Prerequisites
 
