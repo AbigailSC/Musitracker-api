@@ -64,6 +64,14 @@ const router: Router = Router();
  *      schema:
  *        type: string
  *      description: The idUser of the user
+ *  securitySchemes:
+ *    authToken:
+ *      type: http
+ *      scheme: bearer
+ *      bearerFormat: JWT
+ *      in: header
+ *  security:
+ *    - authToken: []
  */
 
 /**
@@ -104,6 +112,8 @@ router.post('/singup', singUp);
  * /auth/singin:
  *  post:
  *    summary: use to sing in a user
+ *    security:
+ *      - authToken: []
  *    tags: [Auth]
  *    requestBody:
  *      required: true
@@ -132,6 +142,8 @@ router.post('/singin', singIn);
  * /auth/profile:
  *  get:
  *    summary: use to get the profile of a user
+ *    security:
+ *      - authToken: []
  *    tags: [Auth]
  *    responses:
  *      200:
