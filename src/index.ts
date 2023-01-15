@@ -6,7 +6,17 @@ import cors from 'cors';
 import musiRoute from './routes/music';
 import user from './routes/userRoute';
 import auth from './routes/auth';
+
+// Swagger
+
+import swaggerUi from 'swagger-ui-express';
+import swaggerJsdoc from 'swagger-jsdoc';
+import { options } from './swaggerOptions';
+
+const specs = swaggerJsdoc(options);
+
 dotenv.config();
+
 const app = express();
 
 // middleware que transforma la req.body a un .json
@@ -29,6 +39,7 @@ mongoose
 app.use('/auth', auth);
 app.use('/music', musiRoute);
 app.use('/user', user);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.listen(PORT, () => {
   console.log('[ON] Server running on port ', PORT);

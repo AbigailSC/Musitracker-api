@@ -38,7 +38,7 @@ export const singIn: RequestHandler = async (req, res) => {
     const user = await UserScheme.findOne({ email: email.toLowerCase() });
     if (user === null) return res.status(400).json('Email is wrong');
     const passwordValidate: boolean = await user.validatePassword(password);
-    if (!passwordValidate) return res.status(400).json('Invalid password');
+    if (!passwordValidate) return res.status(401).json('Invalid password');
     const token: string = jwt.sign(
       { _id: user._id },
       process.env.TOKEN_SECRET ?? 'tokenSecret',
