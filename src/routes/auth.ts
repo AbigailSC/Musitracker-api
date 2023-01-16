@@ -78,7 +78,7 @@ const router: Router = Router();
  * @swagger
  * tags:
  *  name: Auth
- *  description: Auth endpoint
+ *  description: Auth endpoint routes
  */
 
 /**
