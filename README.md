@@ -63,3 +63,5 @@ Most Musitracker configuration is done through musitracker-config, however the A
 | MONGODB_URI          | `undefined` | Add your connection string of MongoDB into your application code.       |
 | PORT                 | 3000        | The TCP port the Musitracker will use for incoming network connections. |
 | TOKEN_SECRET         | secretWord  | The secret word of your JWT connections.                                |
+
+Made with love by [AbigailSC](https://github.com/AbigailSC) 🚀
