@@ -1,0 +1,73 @@
+tags:
+  - name: Auth
+    description: Auth endpoint routes
+  - name: Music
+    description: Music endpoint routes
+  - name: User
+    description: Operations about user
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The user's username
+        email:
+          type: string
+          description: The user's email
+        password:
+          type: string
+          description: The user's password
+        imageProfile:
+          type: string
+          description: The user's imageProfile
+        favorites:
+          type: array
+          description: The user's favorites songs
+      required:
+        - username
+        - email
+        - password
+      example:
+        username: John Doe
+        email: JohnDoe@gmail.com
+        password: 123456
+        imageProfile: https://ui-avatars.com/api/?name=John Doe&color=fff&background=random&size=400&font-size=0.5&rounded=true
+        favorites: []
+    Favorites:
+      type: object
+      properties:
+        idTitle:
+          type: number
+          description: The idTitle of the song
+        idUser:
+          type: string
+          description: The idUser of the user
+        active:
+          type: boolean
+          description: The active of the song
+      required:
+        - idTitle
+        - idUser
+        - active
+      example:
+        idTitle: 1533348982
+        idUser: 5f9f1b0b0b9b9c1b8c8c8c8c
+        active: true
+  parameters:
+    idUser:
+      in: path
+      name: idUser
+      required: true
+      schema:
+        type: string
+      description: The idUser of the user
+  securitySchemes:
+    authToken:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      in: header
+  security:
+    - authToken: []

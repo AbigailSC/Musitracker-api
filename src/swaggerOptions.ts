@@ -1,5 +1,5 @@
-export const options = {
-  definition: {
+export const swaggerDefinition = {
+  swaggerDefinition: {
     openapi: '3.0.0',
     info: {
       title: 'Musitracker API',
@@ -7,11 +7,7 @@ export const options = {
       description:
         'An API for user registration and search for songs, albums, artists based on the Deezer API'
     },
-    servers: [
-      {
-        url: 'http://localhost:3000'
-      }
-    ]
+    servers: [{ url: 'http://localhost:3000' }]
   },
-  apis: ['./src/routes/*.ts']
+  apis: ['./src/docs/*.yaml']
 };

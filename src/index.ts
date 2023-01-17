@@ -11,9 +11,9 @@ import auth from './routes/auth';
 
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
-import { options } from './swaggerOptions';
+import { swaggerDefinition } from './swaggerOptions';
 
-const specs = swaggerJsdoc(options);
+const specs = swaggerJsdoc(swaggerDefinition);
 
 dotenv.config();
 

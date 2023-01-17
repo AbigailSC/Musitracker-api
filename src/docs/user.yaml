@@ -1,0 +1,119 @@
+paths:
+  /user:
+    post:
+      tags:
+        - User
+      summary: creates a new user
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: sign up
+          description: Creates a new user
+          required: false
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        201:
+          description: An object with new user detail
+    get:
+      tags:
+        - User
+      summary: get all users
+      produces:
+        - application/json
+      responses:
+        200:
+          description: An object's array with users
+  /user/{id}:
+    get:
+      tags:
+        - User
+      summary: get user detail
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+      responses:
+        200:
+          description: An object with user detail
+    put:
+      tags:
+        - User
+      summary: update user info
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+        - name: new info
+          in: body
+          description: modified user info
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: An object with updated user info
+    delete:
+      tags:
+        - User
+      summary: delete an user
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+      responses:
+        204:
+          description: The server successfully processed the request, but is not returning any content
+definitions:
+  User:
+    type: object
+    properties:
+      user:
+        type: object
+        properties:
+          id:
+            type: string
+            format: objectId
+          name:
+            type: string
+          lastName:
+            type: string
+          userName:
+            type: string
+          email:
+            type: string
+            format: email
+          password:
+            type: string
+            format: password
+          contact:
+            type: number
+          role:
+            type: string
+          score:
+            type: number
+          history:
+            type: array
+            items:
+              type: string
+              date: date-time
+          padelFields:
+            type: array
+            items:
+              type: string
+              id: objectId
+          createdAt:
+            type: string
+            format: date-time
+          updatedAt:
+            type: string
+            format: date-time
+          isActive:
+            type: boolean
