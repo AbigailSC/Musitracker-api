@@ -288,3 +288,507 @@ paths:
                               type:
                                 type: string
                                 example: album
+  /music/artist/{idArtist}:
+    get:
+      summary: use to search artist info
+      tags:
+        - Music
+      parameters:
+        - name: idArtist
+          in: path
+          description: Id of artist to search
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    example: 161553
+                  name:
+                    type: string
+                    example: Twice
+                  link:
+                    type: string
+                    example: https://www.deezer.com/artist/161553
+                  picture_xl:
+                    type: string
+                    example: https://e-cdns-images.dzcdn.net/images/artist/cbda49722c177c2133b748d7a6bf5dc7/1000x1000-000000-80-0-0.jpg
+                  nb_album:
+                    type: number
+                    example: 65
+                  nb_fan:
+                    type: number
+                    example: 1040376
+  /music/artist/{idArtist}/topTracks:
+    get:
+      summary: use to get the top tracks of artist
+      tags:
+        - Music
+      parameters:
+        - name: idArtist
+          in: path
+          description: Id of artist to search
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    example: 161553
+                  title:
+                    type: string
+                    example: The feels
+                  preview:
+                    type: string
+                    example: https://cdns-preview-5.dzcdn.net/stream/c-5355c6f8c53dfda7b3d336452a5b99b0-4.mp3
+                  duration:
+                    type: number
+                    example: 240
+                  artist:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: Twice
+                  album:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+                        exmaple: 'Formula of Love: O+T=<3'
+                      cover:
+                        type: string
+                        example: https://e-cdns-images.dzcdn.net/images/artist/cbda49722c177c2133b748d7a6bf5dc7/1000x1000-000000-80-0-0.jpg
+  /music/artist/{idArtist}/albums/{page}:
+    get:
+      summary: use to get information about all albums per artist
+      tags:
+        - Music
+      parameters:
+        - name: idArtist
+          in: path
+          description: Id of artist to search
+          required: true
+          schema:
+            type: number
+        - name: page
+          in: path
+          description: Number of page
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  apiData:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          example: 333014067
+                        title:
+                          type: string
+                          exmaple: Celebrate
+                        link:
+                          type: string
+                          exmaple: https://www.deezer.com/album/333014067
+                        cover_big:
+                          type: string
+                          example: https://e-cdns-images.dzcdn.net/images/artist/cbda49722c177c2133b748d7a6bf5dc7/1000x1000-000000-80-0-0.jpg
+                        genre_id:
+                          type: number
+                          example: 16
+                        fans:
+                          type: number
+                          example: 2142
+                        release_date:
+                          type: string
+                          example: '2022-07-27'
+                        record_type:
+                          type: string
+                          example: album
+                  total:
+                    type: number
+                    example: 65
+                  next:
+                    type: string
+                    example: https://api.deezer.com/artist/161553/albums?index=25
+                  prev:
+                    type: string
+                    example: null
+  /music/related/{idArtist}:
+    get:
+      summary: use to get related artists by idArtist
+      tags:
+        - Music
+      parameters:
+        - name: idArtist
+          in: path
+          description: Id of artist to search
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      example: 3649631
+                    name:
+                      type: string
+                      example: ITZY
+                    link:
+                      type: string
+                      example: https://www.deezer.com/es/artist/3649631
+                    picture_xl:
+                      type: string
+                      example: https://e-cdns-images.dzcdn.net/images/artist/70db4fae5a9cc325ebc7d3f70964569f/1000x1000-000000-80-0-0.jpg
+                    nb_album:
+                      type: number
+                      example: 20
+                    nb_fan:
+                      type: number
+                      example: 661429
+  /music/trending:
+    get:
+      summary: use to get trending music
+      tags:
+        - Music
+      responses:
+        200:
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                  id:
+                    type: number
+                    example: 2103405097
+                  title:
+                    type: string
+                    example: 'Shakira: Bzrp Music Sessions, Vol. 53'
+                  link:
+                    type: string
+                    example: https://www.deezer.com/track/2103405097
+                  duration:
+                    type: number
+                    example: 217
+                  rank:
+                    type: number
+                    example: 997528
+                  preview:
+                    type: string
+                    example: https://cdns-preview-5.dzcdn.net/stream/c-5117a4edd09385c14df8fc544e44f502-7.mp3
+                  artist:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                        example: 12487862
+                      name:
+                        type: string
+                        example: Bizarrap
+                      link:
+                        type: string
+                        example: https://www.deezer.com/artist/12487862
+                      picture_xl:
+                        type: string
+                        example: https://e-cdns-images.dzcdn.net/images/artist/e121c1ef9b1135e6a5b71c1e65ab10b4/1000x1000-000000-80-0-0.jpg
+                  album:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                        example: 395194257
+                      title:
+                        type: string
+                        example: 'Shakira: Bzrp Music Sessions, Vol. 53'
+                      cover_big:
+                        type: string
+                        example: https://e-cdns-images.dzcdn.net/images/cover/ceff6442648d2085ce8a8f6a07617ccd/500x500-000000-80-0-0.jpg
+                      type:
+                        type: string
+                        example: album
+  /music/trending/artists:
+    get:
+      summary: use to get trending artists
+      tags:
+        - Music
+      responses:
+        200:
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      example: 4902904
+                    name:
+                      type: string
+                      example: Duki
+                    link:
+                      type: stirng
+                      example: https://www.deezer.com/artist/4902904
+                    picture_xl:
+                      type: string
+                      example: https://e-cdns-images.dzcdn.net/images/artist/342b6c7cb35ff0e44d482597aad0cc9e/1000x1000-000000-80-0-0.jpg
+  /music/topPlaylist:
+    get:
+      summary: use to get trending playlists
+      tags:
+        - Music
+      responses:
+        200:
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      example: 1868167046
+                    title:
+                      type: string
+                      example: Top Hits Argentina
+                    nb_tracks:
+                      type: number
+                      example: 50
+                    picture_xl:
+                      type: number
+                      example: https://e-cdns-images.dzcdn.net/images/playlist/000480956ee895216cb909e7fe69104e/1000x1000-000000-80-0-0.jpg
+                    tracklist:
+                      type: string
+                      example: https://api.deezer.com/playlist/1868167046/tracks
+                    creation_date:
+                      type: string
+                      example: '2016-05-17 15:08:46'
+                    user:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          example: 302078805
+                        example:
+                          type: string
+                          name: 'Manuel - Deezer Editor Americas'
+  /music/playlist/{playlistId}:
+    get:
+      summary: use to get more details about a playlist
+      tags:
+        - Music
+      responses:
+        200:
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    example: 1868167046
+                  title:
+                    type: string
+                    example: Top Hits Argentina
+                  description:
+                    type: string
+                    example: Los nuevos hitazos de Argentina!
+                  duration:
+                    type: number
+                    example: 9709
+                  nb_tracks:
+                    type: number
+                    example: 50
+                  fans:
+                    type: number
+                    example: 112279
+                  link:
+                    type: string
+                    example: https://www.deezer.com/playlist/1868167046
+                  picture_xl:
+                    type: string
+                    example: https://e-cdns-images.dzcdn.net/images/playlist/000480956ee895216cb909e7fe69104e/1000x1000-000000-80-0-0.jpg
+                  creation_date:
+                    type: string
+                    example: '2016-05-17 15:08:46'
+                  public:
+                    type: boolean
+                    example: true
+                  creator:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                        example: 302078805
+                      example:
+                        type: string
+                        name: 'Manuel - Deezer Editor Americas'
+                  tracks:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          example: 2090621057
+                        title:
+                          type: string
+                          example: '3 Estrellas en el conjunto'
+                        link:
+                          type: string
+                          example: https://www.deezer.com/track/2090621057
+                        duration:
+                          type: number
+                          example: 276
+                        rank:
+                          type: number
+                          example: 720820
+                        preview:
+                          type: number
+                          example: https://cdns-preview-0.dzcdn.net/stream/c-03ee8959f7cc01923baf2bae6c222cd0-3.mp3
+                        artist:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                              example: 12487862
+                            name:
+                              type: string
+                              example: Bizarrap
+                            link:
+                              type: string
+                              example: https://www.deezer.com/artist/12487862
+                        album:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                              example: 391832647
+                            title:
+                              type: string
+                              example: '3 Estrellas en el conjunto'
+                            cover:
+                              type: string
+                              example: https://e-cdns-images.dzcdn.net/images/cover/0814a9c68457e29ccdb2b2bbba5d9db0/500x500-000000-80-0-0.jpg
+                            type:
+                              type: string
+                              example: album
+  /music/genres:
+    get:
+      summary: use to get all genres types
+      tags:
+        - Music
+      responses:
+        200:
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      example: 132
+                    name:
+                      type: string
+                      example: Pop
+                    picture:
+                      type: string
+                      example: https://e-cdns-images.dzcdn.net/images/misc/db7a604d9e7634a67d45cfc86b48370a/1000x1000-000000-80-0-0.jpg
+  /music/genres/{genre}:
+    get:
+      summary: use to get artists by genre id
+      tags:
+        - Music
+      responses:
+        200:
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      example: 58568762
+                    name:
+                      type: string
+                      example: Camilo
+                    link:
+                      type: string
+                      example: https://api.deezer.com/artist/58568762/top?limit=50
+                    picture:
+                      type: string
+                      example: https://e-cdns-images.dzcdn.net/images/artist/4cfeee11e242345430528870250f0b72/1000x1000-000000-80-0-0.jpg
+  /music/podcasts:
+    get:
+      summary: use to get trending podcasts
+      tags:
+        - Music
+      responses:
+        200:
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      example: 974012
+                    title:
+                      type: string
+                      example: Venganzas del Pasado
+                    description:
+                      type: string
+                      example: 'Todos los programas de "La venganza será terrible" de Alejandro Dolina en MP3.'
+                    link:
+                      type: string
+                      example: https://www.deezer.com/show/974012
+                    picture:
+                      type: string
+                      example: https://e-cdns-images.dzcdn.net/images/talk/9aa476824513150b3cb348f001b71573/1000x1000-000000-80-0-0.jpg
